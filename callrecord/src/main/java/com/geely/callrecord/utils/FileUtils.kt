@@ -5,6 +5,7 @@ import com.geely.callrecord.helper.LogUtils
 
 import java.io.File
 import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.io.IOException
 import java.lang.NullPointerException
 import java.math.BigInteger
@@ -46,6 +47,20 @@ object FileUtils {
                 deleteFile(f)
             }
             //            file.delete();//如要保留文件夹，只删除文件，请注释这行
+        } else if (file.exists()) {
+            file.delete()
+        }
+    }
+
+    //flie：要删除的文件夹的所在位置
+    fun deleteCopyFile(file: File) {
+        if (file.isDirectory) {
+            val files = file.listFiles()
+            files?.forEach {
+                if (it.name.contains("copy")){
+                    it.delete()
+                }
+            }
         } else if (file.exists()) {
             file.delete()
         }
@@ -102,6 +117,7 @@ object FileUtils {
         }
         return s
     }
+
 
     /**
      * 判断目录是否为空目录
