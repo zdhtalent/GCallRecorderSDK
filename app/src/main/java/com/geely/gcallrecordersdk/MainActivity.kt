@@ -18,10 +18,12 @@ import com.geely.callrecord.CallRecord
 import com.geely.callrecord.content.CallRecordContent
 import com.geely.callrecord.helper.LogUtils
 import com.geely.callrecord.service.UploadIntentService
+import com.geely.callrecord.utils.DateUtils
 import com.geely.callrecord.utils.FileUtils
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.disposables.Disposable
 import java.io.File
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -53,6 +55,7 @@ class MainActivity : AppCompatActivity() {
             .setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB) // optional & default value
             .setOutputFormat(MediaRecorder.OutputFormat.AMR_NB) // optional & default value
             .setAudioSource(MediaRecorder.AudioSource.VOICE_COMMUNICATION) // optional & default value
+            .setSetBaseUrl("https://bomt-dev.test.geely.com/bomt-app/")
             .setShowSeed(true) // optional & default value ->Ex: RecordFileName_incoming.amr || RecordFileName_outgoing.amr
             .build()
 
@@ -63,6 +66,8 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, dirPath)
 
         findViewById<Button>(R.id.button).setOnClickListener {
+            callRecord.changeRecordFileName("record_${phone}_${DateUtils.dateToString(Calendar.getInstance().time)}")
+//            callRecord.changeShowPhoneNumber(phone)
             if (!lacksPermission(this, android.Manifest.permission.CALL_PHONE)) {
                 val intent = Intent()
                     .setAction(Intent.ACTION_CALL)
@@ -123,6 +128,9 @@ class MainActivity : AppCompatActivity() {
                 TelephonyManager.CALL_STATE_OFFHOOK -> Log.d(TAG, "接听电话")
                 TelephonyManager.CALL_STATE_RINGING -> {
                     Log.d(TAG, "响铃：来电号码$phoneNumber")
+                    callRecord.changeRecordFileName("record_${ if(phoneNumber!="") 
+                        phoneNumber else "unknowphone" }_${DateUtils.dateToString(Calendar.getInstance().time)}")
+//                    callRecord.changeShowPhoneNumber(phoneNumber)
                 }
             }
         }

@@ -7,6 +7,7 @@ import android.Manifest
  * date 2019/12/5.
  */
 object CallRecordContent {
+    var BASE_URL = ""
 
     /**
      * 权限组

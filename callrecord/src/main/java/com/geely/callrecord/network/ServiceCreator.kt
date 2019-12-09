@@ -1,6 +1,7 @@
 package com.geely.callrecord.network
 
 import com.geely.brokerkotlintest.intercepor.LoggingInterceptor
+import com.geely.callrecord.content.CallRecordContent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -13,12 +14,12 @@ import java.util.concurrent.TimeUnit
  */
 object ServiceCreator {
 
-    const val BASE_URL = "https://bomt-dev.test.geely.com/bomt-app/"
+    const val BASE_URL = "https://bomt-dev.test.geely.com/bomt-app/advice/save"
 
     private val httpClient = OkHttpClient.Builder()
 
     private val builder = Retrofit.Builder()
-        .baseUrl(BASE_URL)
+        .baseUrl(CallRecordContent.BASE_URL)
         .client(
             httpClient
                 .addInterceptor(

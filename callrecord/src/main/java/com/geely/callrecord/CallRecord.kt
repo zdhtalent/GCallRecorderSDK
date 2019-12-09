@@ -95,17 +95,26 @@ class CallRecord private constructor(private val mContext: Context) {
         LogUtils.i("CallRecord", "New dir name: $newDirName")
     }
 
-    fun changeRecordDirPath(newDirPath: String?) {
-        if (newDirPath == null || newDirPath.isEmpty()) {
-            try {
-                throw Exception("newDirPath can not be empty or null")
-            } catch (e: Exception) {
-                e.printStackTrace()
-                return
-            }
+//    fun changeRecordDirPath(newDirPath: String?) {
+//        if (newDirPath == null || newDirPath.isEmpty()) {
+//            try {
+//                throw Exception("newDirPath can not be empty or null")
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//                return
+//            }
+//        }
+//        PrefsHelper.writePrefString(mContext, PREF_DIR_PATH, newDirPath)
+//        LogUtils.i("CallRecord", "New dir path: $newDirPath")
+//    }
+
+    fun changeShowPhoneNumber(phoneNumber: String?) {
+        if (phoneNumber == null || phoneNumber.isEmpty()) {
+            PrefsHelper.writePrefString(mContext, PREF_SHOW_PHONE_NUMBER, "unknow_phone_number")
+        }else {
+            PrefsHelper.writePrefString(mContext, PREF_SHOW_PHONE_NUMBER, phoneNumber)
+            LogUtils.i("CallRecord", "Phone Number: $phoneNumber")
         }
-        PrefsHelper.writePrefString(mContext, PREF_DIR_PATH, newDirPath)
-        LogUtils.i("CallRecord", "New dir path: $newDirPath")
     }
 
     fun changeReceiver(receiver: CallRecordReceiver) {
@@ -119,6 +128,9 @@ class CallRecord private constructor(private val mContext: Context) {
 
         val recordDirName: String
             get() = PrefsHelper.readPrefString(mContext, PREF_DIR_NAME)!!
+
+        val url: String
+            get() = PrefsHelper.readPrefString(mContext, PREF_BASE_URL)!!
 
         val audioSource: Int
             get() = PrefsHelper.readPrefInt(mContext, PREF_AUDIO_SOURCE)
@@ -144,7 +156,8 @@ class CallRecord private constructor(private val mContext: Context) {
         init {
             PrefsHelper.writePrefString(mContext, PREF_FILE_NAME, "Record")
             PrefsHelper.writePrefString(mContext, PREF_DIR_NAME, "CallRecord")
-            PrefsHelper.writePrefString(mContext, PREF_DIR_PATH, Environment.getExternalStorageDirectory().path)
+            PrefsHelper.writePrefString(mContext, PREF_DIR_PATH, mContext.getExternalFilesDir(null)?.path)
+            PrefsHelper.writePrefString(mContext, PREF_BASE_URL, "")
             PrefsHelper.writePrefInt(mContext, PREF_AUDIO_SOURCE, MediaRecorder.AudioSource.VOICE_COMMUNICATION)
             PrefsHelper.writePrefInt(mContext, PREF_AUDIO_ENCODER, MediaRecorder.AudioEncoder.AMR_NB)
             PrefsHelper.writePrefInt(mContext, PREF_OUTPUT_FORMAT, MediaRecorder.OutputFormat.AMR_NB)
@@ -173,6 +186,12 @@ class CallRecord private constructor(private val mContext: Context) {
             PrefsHelper.writePrefString(mContext, PREF_DIR_NAME, recordDirName)
             return this
         }
+
+        fun setSetBaseUrl(baseUrl: String?): Builder {
+            PrefsHelper.writePrefString(mContext, PREF_BASE_URL, baseUrl)
+            return this
+        }
+
 
         fun setAudioSource(audioSource: Int): Builder {
             PrefsHelper.writePrefInt(mContext, PREF_AUDIO_SOURCE, audioSource)
@@ -224,6 +243,7 @@ class CallRecord private constructor(private val mContext: Context) {
         const val PREF_AUDIO_ENCODER = "PrefAudioEncoder"
         const val PREF_OUTPUT_FORMAT = "PrefOutputFormat"
         const val PREF_LOG_ENABLE = "PrefLogEnable"
+        const val PREF_BASE_URL = "PrefBaseUrl"
 
         fun initReceiver(context: Context): CallRecord {
             val callRecord = Builder(context).build()

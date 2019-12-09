@@ -141,12 +141,14 @@ open class CallRecordReceiver(private var callRecord: CallRecord) : PhoneCallRec
                 fileNameBuilder.append("_")
             }
 
-            if (showPhoneNumber && phoneNumber != null) {
-                fileNameBuilder.append(phoneNumber)
-                fileNameBuilder.append("_")
-            }
+//            if (showPhoneNumber && phoneNumber != null) {
+//                fileNameBuilder.append(phoneNumber)
+//                fileNameBuilder.append("_")
+//            }
 
             fileName = fileNameBuilder.toString()
+
+            LogUtils.d(TAG,"filename=$fileName")
 
             val suffix: String
             when (outputFormat) {
