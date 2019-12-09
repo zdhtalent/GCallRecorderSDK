@@ -20,8 +20,8 @@ object DateUtils {
         return format.format(date)
     }
 
-    fun dateToString(date: Date, type: String): String? {
-        val format: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    fun dateToString(date: Date): String? {
+        val format: DateFormat = SimpleDateFormat("yyyyMMddHHmmss")
         return format.format(date)
     }
 
