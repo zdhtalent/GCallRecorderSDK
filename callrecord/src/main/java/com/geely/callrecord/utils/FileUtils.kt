@@ -5,9 +5,7 @@ import com.geely.callrecord.helper.LogUtils
 
 import java.io.File
 import java.io.FileInputStream
-import java.io.FileOutputStream
 import java.io.IOException
-import java.lang.NullPointerException
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException

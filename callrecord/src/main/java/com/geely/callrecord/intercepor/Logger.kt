@@ -232,7 +232,7 @@ class Logger {
             val headers = header.split(LINE_SEPARATOR!!.toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 
             return StringBuilder().apply {
-                if (headers != null && headers.isNotEmpty()) {
+                if (headers.isNotEmpty()) {
                     for (item in headers) {
                         if (hideVerticalLine) {
                             append(" - ").append(item).append("\n")
