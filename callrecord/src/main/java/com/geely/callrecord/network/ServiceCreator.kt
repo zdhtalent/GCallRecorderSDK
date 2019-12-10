@@ -34,6 +34,7 @@ object ServiceCreator {
                 .readTimeout(30, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS)
                 .connectTimeout(30, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(false)
                 .build()
         )
         .addConverterFactory(ScalarsConverterFactory.create())
