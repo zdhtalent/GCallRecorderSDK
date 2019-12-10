@@ -54,13 +54,13 @@ class UploadIntentService : IntentService("UploadIntentService") {
                     val requestFile = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
                     files_upload.add(
                         MultipartBody.Part.createFormData(
-                            "files",
+                            "",
                             it.name,
                             requestFile
                         )
                     )
                     val requestBody = file.asRequestBody("audio".toMediaTypeOrNull())
-                    builder.addFormDataPart("file", it.name, requestBody)
+                    builder.addFormDataPart("", it.name, requestBody)
 //                FileUtils.deleteFile(file)
                 }
                 val parts: List<MultipartBody.Part>? = builder.build().parts
@@ -68,10 +68,12 @@ class UploadIntentService : IntentService("UploadIntentService") {
                     try {
                         result = uploadRecordFiles(parts)
                     } catch (e: Throwable) {
+//                        LogUtils.d(TAG,"ERROR=${e.message.toString()}")
                         val file = File(dirPath)
                         FileUtils.deleteCopyFile(file)
                     }
                 }
+//                LogUtils.d(TAG,"获取result")
                 result.let {
                     if (it?.status == 200) {
                         LogUtils.d(TAG, "文件上传成功!")
