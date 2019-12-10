@@ -68,10 +68,12 @@ class UploadIntentService : IntentService("UploadIntentService") {
                     try {
                         result = uploadRecordFiles(parts)
                     } catch (e: Throwable) {
+//                        LogUtils.d(TAG,"ERROR=${e.message.toString()}")
                         val file = File(dirPath)
                         FileUtils.deleteCopyFile(file)
                     }
                 }
+//                LogUtils.d(TAG,"获取result")
                 result.let {
                     if (it?.status == 200) {
                         LogUtils.d(TAG, "文件上传成功!")
