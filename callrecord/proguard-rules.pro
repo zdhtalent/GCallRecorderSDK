@@ -19,3 +19,14 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keep class com.geely.callrecord.CallRecord{
+    public <fields>;
+    public <methods>;
+}
+
+-keep class com.geely.callrecord.utils.*{
+    *;
+}
+
+-keep class com.geely.callrecord.service.UploadIntentService
