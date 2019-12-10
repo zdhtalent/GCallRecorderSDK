@@ -25,7 +25,15 @@
     public <methods>;
 }
 
+-keep class com.geely.callrecord.CallRecord$Builder{
+    public *;
+}
+
 -keep class com.geely.callrecord.utils.*{
+    *;
+}
+
+-keep class com.geely.callrecord.content.*{
     *;
 }
 
